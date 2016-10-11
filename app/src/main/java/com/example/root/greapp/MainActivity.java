@@ -1,5 +1,9 @@
 package com.example.root.greapp;
 
+import android.app.ActionBar;
+import android.content.Intent;
+import android.graphics.Color;
+import android.media.Image;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -9,66 +13,60 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MainActivity extends FragmentActivity {
+import com.github.paolorotolo.appintro.AppIntro;
+import com.github.paolorotolo.appintro.AppIntro2;
+import com.github.paolorotolo.appintro.AppIntroFragment;
 
-    /**
-     * The number of pages (wizard steps) to show in this demo.
-     */
-    private static final int NUM_PAGES = 3;
+public class MainActivity extends AppIntro2 {
 
-    /**
-     * The pager widget, which handles animation and allows swiping horizontally to access previous
-     * and next wizard steps.
-     */
-    private ViewPager mPager;
 
-    /**
-     * The pager adapter, which provides the pages to the view pager widget.
-     */
-    private PagerAdapter mPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Instantiate a ViewPager and a PagerAdapter.
-        mPager = (ViewPager) findViewById(R.id.pager);
-        mPagerAdapter = new ScreenSlidePagerAdapter(getSupportFragmentManager());
-        mPager.setAdapter(mPagerAdapter);
+        // Instead of fragments, you can also use our default slide
+        // Just set a title, description, background and image. AppIntro will do the rest.
+
+
+        getSupportActionBar().hide();
+
+
+        int imageResource = getResources().getIdentifier("@drawable/weather", null, getPackageName());
+        addSlide(new ScreenSlidePageFragment().setCount(0));
+        addSlide(new ScreenSlidePageFragment().setCount(1));
+        addSlide(new ScreenSlidePageFragment().setCount(2));
+
+
+
+        // Hide Skip/Done button.
+        setProgressButtonEnabled(true);
+
+
     }
 
     @Override
-    public void onBackPressed() {
-        if (mPager.getCurrentItem() == 0) {
-            // If the user is currently looking at the first step, allow the system to handle the
-            // Back button. This calls finish() on this activity and pops the back stack.
-            super.onBackPressed();
-        } else {
-            // Otherwise, select the previous step.
-            mPager.setCurrentItem(mPager.getCurrentItem() - 1);
-        }
+    public void onSkipPressed(Fragment currentFragment) {
+        super.onSkipPressed(currentFragment);
+        // Do something when users tap on Skip button.
+        startFlashCard();
     }
 
-    /**
-     * A simple pager adapter that represents 5 ScreenSlidePageFragment objects, in
-     * sequence.
-     */
-    private class ScreenSlidePagerAdapter extends FragmentStatePagerAdapter {
-        public ScreenSlidePagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            ScreenSlidePageFragment temp = new ScreenSlidePageFragment();
-            temp.setCount(position);
-            return temp;
-        }
-
-        @Override
-        public int getCount() {
-            return NUM_PAGES;
-        }
+    @Override
+    public void onDonePressed(Fragment currentFragment) {
+        super.onDonePressed(currentFragment);
+        // Do something when users tap on Done button.
+        startFlashCard();
     }
+
+    public void startFlashCard(){
+        Intent intent = new Intent(MainActivity.this, BaseFlashCard.class);
+        startActivity(intent);
+    }
+
+
+
+
+
+
 }
