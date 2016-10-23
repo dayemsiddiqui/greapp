@@ -14,6 +14,7 @@ public class MyDatabase  extends SQLiteAssetHelper {
 
     private static final String DATABASE_NAME = "vocab.db";
     private static final int DATABASE_VERSION = 1;
+    private SQLiteDatabase db = getReadableDatabase();
 
     public MyDatabase(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -21,7 +22,7 @@ public class MyDatabase  extends SQLiteAssetHelper {
 
     public Cursor getWords() {
 
-        SQLiteDatabase db = getReadableDatabase();
+
         SQLiteQueryBuilder qb = new SQLiteQueryBuilder();
 
         String [] sqlSelect = {"id", "word", "meaning"};
@@ -31,6 +32,13 @@ public class MyDatabase  extends SQLiteAssetHelper {
         Cursor c = qb.query(db, sqlSelect, null, null,
                 null, null, null);
 
+        c.moveToFirst();
+        return c;
+
+    }
+
+    public Cursor getQuizQuestion(){
+        Cursor c = db.rawQuery("SELECT id, word, meaning FROM words ORDER BY RANDOM() LIMIT 4", null);
         c.moveToFirst();
         return c;
 

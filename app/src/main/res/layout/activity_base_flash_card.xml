@@ -8,7 +8,7 @@
     android:fitsSystemWindows="true"
     android:clipChildren="false"
     tools:context="com.example.root.greapp.BaseFlashCard"
-    android:background="#23CCE9"
+    android:background="#1cb0f6"
     >
 
     <!--<android.support.design.widget.AppBarLayout-->
@@ -60,16 +60,7 @@
 
 
     </LinearLayout>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fab_mark"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end|right"
-        android:layout_margin="@dimen/fab_margin"
-        app:fabSize="normal"
-        app:elevation="6dp"
-        app:backgroundTint="#D95141"
-        android:src="@drawable/star_unfilled" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

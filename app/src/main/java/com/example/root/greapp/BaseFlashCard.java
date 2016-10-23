@@ -38,7 +38,7 @@ public class BaseFlashCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_flash_card);
         cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
-
+        getSupportActionBar().hide();
         datahandle = new DataHandler(new MyDatabase(this).getWords());
 
         testData = new ArrayList<>();
@@ -54,26 +54,7 @@ public class BaseFlashCard extends AppCompatActivity {
 
 
         marked = false;
-        final FloatingActionButton bookmark = (FloatingActionButton) findViewById(R.id.fab_mark);
 
-        bookmark.setOnClickListener(new View.OnClickListener() {
-            String uri = "@drawable/star_unfilled";
-
-
-
-            @Override
-            public void onClick(View view) {
-                if(!marked){
-                    uri = "@drawable/star_unfilled";
-                    marked = true;
-                }else{
-                    uri = "@drawable/star";
-                    marked = false;
-                }
-                bookmark.setImageDrawable(getResources().getDrawable(getResources().getIdentifier(uri, null, getPackageName())));
-
-            }
-        });
 
 
 

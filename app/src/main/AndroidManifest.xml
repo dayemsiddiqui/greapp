@@ -19,8 +19,7 @@
         </activity>
         <activity
             android:name=".BaseFlashCard"
-            android:label="@string/title_activity_base_flash_card"
-            android:theme="@style/AppTheme.NoActionBar" />
+             />
         <activity android:name=".MainScreen" />
         <activity android:name=".QuizCorner"></activity>
     </application>
