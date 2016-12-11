@@ -17,11 +17,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".BaseFlashCard"
-             />
+        <activity android:name=".BaseFlashCard" />
         <activity android:name=".MainScreen" />
-        <activity android:name=".QuizCorner"></activity>
+        <activity android:name=".QuizCorner" />
+        <activity android:name=".QuizReport"></activity>
     </application>
 
 </manifest>
