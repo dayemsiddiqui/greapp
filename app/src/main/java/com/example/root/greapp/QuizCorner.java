@@ -13,6 +13,9 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.root.greapp.model.QuizModel;
+
+import java.io.Serializable;
 import java.util.Random;
 
 public class QuizCorner extends Activity {
@@ -21,10 +24,11 @@ public class QuizCorner extends Activity {
     private String []answers = new String[4];
     private String user_answer = "";
     private int question_displayed_count = 0;  //Keeps tracks how many questions are displayed to users
-    private int question_max_count = 1; //Sets a limit on how many questions to display before showing the quiz result
+    private int question_max_count = 10; //Sets a limit on how many questions to display before showing the quiz result
     //Flag to check whether the user has already answered the question or not
     private boolean answered = false;
     private int [] options =  new int[4];
+    private QuizModel scoreboard = new QuizModel();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,6 +70,7 @@ public class QuizCorner extends Activity {
         resetOptions();
         disableCheck();
         enableRadioButtons();
+        hideAnswer();
         words.moveToFirst();
         word = words.getString(words.getColumnIndex("word"));
         correct_answer = words.getString(words.getColumnIndex("meaning"));
@@ -100,6 +105,10 @@ public class QuizCorner extends Activity {
     public void triggerReport(){
         if(question_displayed_count >= question_max_count){
             Intent intent = new Intent(QuizCorner.this, QuizReport.class);
+//            Bundle bundle = new Bundle();
+            QuizReport.scoreboard = this.scoreboard;
+//            bundle.putSerializable("MyClass", (Serializable) scoreboard);
+//            intent.putExtras(bundle);
             startActivity(intent);
         }
     }
@@ -141,11 +150,11 @@ public class QuizCorner extends Activity {
     private void handleCheck(View view){
 
         if(user_answer.equals(correct_answer)){
-            //setQuestion();
-
+            scoreboard.incrementCorrectCount();
         }else {
             view.setBackgroundColor(Color.parseColor("#e74c3c"));
-//            ((Button)view).setText("Wrong Answer");
+            showAnswer();
+            scoreboard.incrementWrongCount();
         }
         ((Button)view).setText("Continue");
 
@@ -212,5 +221,16 @@ public class QuizCorner extends Activity {
         check.setClickable(true);
         check.setBackgroundColor(Color.parseColor("#77c924"));
         check.setTextColor(Color.WHITE);
+    }
+
+    private void showAnswer(){
+        TextView show = (TextView) findViewById(R.id.answer_viewer);
+        show.setText("The correct answer is " + correct_answer);
+        show.setVisibility(View.VISIBLE);
+    }
+
+    private void hideAnswer(){
+        TextView show = (TextView) findViewById(R.id.answer_viewer);
+        show.setVisibility(View.INVISIBLE);
     }
 }

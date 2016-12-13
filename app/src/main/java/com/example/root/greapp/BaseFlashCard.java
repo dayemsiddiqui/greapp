@@ -38,6 +38,7 @@ public class BaseFlashCard extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base_flash_card);
         cardStack = (SwipeDeck) findViewById(R.id.swipe_deck);
+        Button bookmark = (Button) findViewById(R.id.bookmark);
         getSupportActionBar().hide();
         datahandle = new DataHandler(new MyDatabase(this).getWords());
 
